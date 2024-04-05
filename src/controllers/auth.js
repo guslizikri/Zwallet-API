@@ -22,8 +22,8 @@ const controller = {
         return response(res, 401, "Invalid Email");
       }
       const passwordUser = req.body.password;
-        const check = await bcrypt.compare(passwordUser, password);
-    //   const check = passwordUser == password;
+      const check = await bcrypt.compare(passwordUser, password);
+      //   const check = passwordUser == password;
       if (check) {
         const tokenJwt = genToken(id);
         return response(res, 200, {
