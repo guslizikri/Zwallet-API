@@ -6,45 +6,45 @@ const fs = require("fs");
 
 // add data user
 controller.createUser = async (req, res) => {
-    try {
-        //check apakah email atau password sudah ada
-        const checkEmailOrUsername = await model.getPassword(req.body);
-        if (checkEmailOrUsername) {
-            if(checkEmailOrUsername.username == req.body.username){
-                return response(res, 500, `Username sudah terdaftar`);
-            }
+  try {
+    //check apakah email atau password sudah ada
+    const checkEmailOrUsername = await model.getPassword(req.body);
+    if (checkEmailOrUsername) {
+      if (checkEmailOrUsername.username == req.body.username) {
+        return response(res, 500, `Username sudah terdaftar`);
+      }
 
-            if(checkEmailOrUsername.email == req.body.email){
-                return response(res, 500, `Email sudah terdaftar`);
-            }
-        }
-        
-        req.body.password = await hashing(req.body.password)
-        const result = await model.createNewUser(req.body)
-        return response(res, 200, result)
-    } catch (error) {
-        return response(res, 500, error.message)
+      if (checkEmailOrUsername.email == req.body.email) {
+        return response(res, 500, `Email sudah terdaftar`);
+      }
     }
-}
+
+    req.body.password = await hashing(req.body.password);
+    const result = await model.createNewUser(req.body);
+    return response(res, 200, result);
+  } catch (error) {
+    return response(res, 500, error.message);
+  }
+};
 
 // add pin user
 controller.createPin = async (req, res) => {
-    try {
-        const result = await model.createPin(req.body)
-        return response(res, 200, result)
-    } catch (error) {
-        return response(res, 500, error.message)
-    }
-}
+  try {
+    const result = await model.createPin(req.body);
+    return response(res, 200, result);
+  } catch (error) {
+    return response(res, 500, error.message);
+  }
+};
 
 controller.checkEmail = async (req, res) => {
   try {
-        const check = await model.checkEmail(req.body.email)
-        if(!check) {
-          return response(res, 500, `Email tidak terdaftar`);
-        }
-        const data = check;
-        return response(res, 200, {message : `Email terdaftar`, data});
+    const check = await model.checkEmail(req.body.email);
+    if (!check) {
+      return response(res, 500, `Email tidak terdaftar`);
+    }
+    const data = check;
+    return response(res, 200, { message: `Email terdaftar`, data });
   } catch (error) {
     return response(res, 500, error.message);
   }
@@ -52,17 +52,14 @@ controller.checkEmail = async (req, res) => {
 
 controller.resetPassword = async (req, res) => {
   try {
-    req.body.password = await hashing(req.body.password)
-    
-    const data = await model.resetPassword(req.body)
-    return response(res, 200, data)
+    req.body.password = await hashing(req.body.password);
 
-
+    const data = await model.resetPassword(req.body);
+    return response(res, 200, data);
   } catch (error) {
     return response(res, 500, error.message);
   }
 };
-
 
 controller.updateImageUser = async (req, res) => {
   try {
@@ -103,6 +100,16 @@ controller.getAllUser = async (req, res) => {
     return response(res, 200, result);
   } catch (error) {
     return response(res, 500, error.message);
+  }
+};
+
+controller.getAllUsers = async (req, res) => {
+  try {
+    const searchTerm = req.query.search || "";
+    const users = await model.getAllUsers(searchTerm);
+    return response(res, 200, users);
+  } catch (error) {
+    return response(res, 500, "Internal Server Error", error);
   }
 };
 
@@ -160,6 +167,19 @@ controller.updatePin = async (req, res) => {
     return response(res, 200, data);
   } catch (error) {
     return response(res, 500, error.message);
+  }
+};
+
+controller.getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await model.getUsersById(id);
+    if (!user) {
+      return response(res, 404, "User not found");
+    }
+    return response(res, 200, { user });
+  } catch (error) {
+    return response(res, 500, "Internal Server Error", error);
   }
 };
 

@@ -1,25 +1,24 @@
-const express = require('express')
-const routers = express.Router()
-const transController = require('../controllers/transaction.js')
-const authMiddleware = require('../middleware/auth.js')
+const express = require("express");
+const routers = express.Router();
+const transController = require("../controllers/transaction.js");
+const authMiddleware = require("../middleware/auth.js");
 
 routers.post(
-  '/balance',
+  "/balance",
   authMiddleware.authentication,
   transController.getBalance
-)
+);
 
 routers.post(
-  '/history',
+  "/history",
   authMiddleware.authentication,
   transController.getHistory
-)
+);
 
-routers.post('/:id', authMiddleware.authentication, transController.transfer)
 routers.post(
-  '/send/:id',
+  "/send/:id",
   authMiddleware.authentication,
   transController.newTransaction
-)
+);
 
-module.exports = routers
+module.exports = routers;

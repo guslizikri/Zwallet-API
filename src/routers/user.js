@@ -19,6 +19,8 @@ routers.get(
   authMiddleware.authentication,
   userController.getAllUsers
 );
+
+// yang get all ini sepertinya tidak dipakai
 routers.get("/all", authMiddleware.authentication, userController.getAllUser);
 routers.post(
   "/checkpin",
