@@ -4,7 +4,6 @@ const model = {};
 
 // mengambil data user untuk kebutuhan login berdasarkan email
 model.getPassByEmail = (email) => {
-  console.log(email);
   return new Promise((resolve, reject) => {
     db.query(`SELECT id, password FROM users WHERE email = $1`, [email])
       .then((res) => {
@@ -96,7 +95,6 @@ model.getProfile = (id) => {
 model.getBy = async (search, idToken) => {
   try {
     let filterQuery = "";
-    console.log(search);
     if (search) {
       filterQuery += search
         ? escape("AND username like %L", `%${search}%`)
@@ -253,7 +251,6 @@ model.checkEmail = (email) => {
       .then((res) => {
         if (res.rows.length) {
           resolve(res.rows[0]);
-          console.log(res.rows[0]);
         } else {
           resolve(false);
         }

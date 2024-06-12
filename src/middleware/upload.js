@@ -17,7 +17,6 @@ const middleware = {
     const imageFilter = (req, file, cb) => {
       const allowedExtentions = [".jpeg", ".jpg", ".png", ".avif"];
       const extName = path.extname(file.originalname).toLowerCase();
-      console.log(extName);
       const exactExt = allowedExtentions.includes(extName);
       if (exactExt) {
         return cb(null, true);
@@ -37,11 +36,9 @@ const middleware = {
     upload(req, res, (err) => {
       if (err instanceof multer.MulterError) {
         // A Multer error occurred when uploading.
-        console.log("m");
         return response(res, 500, err);
       } else if (err) {
         // An unknown error occurred when uploading.
-        console.log("a");
         return response(res, 500, err);
       }
       // Everything went fine.

@@ -21,7 +21,6 @@ const controller = {
         data = await model.getBalance(req.decodeToken.id);
       }
 
-      console.log(data);
       return response(res, 200, data);
     } catch (error) {
       return response(res, 500, error.message);

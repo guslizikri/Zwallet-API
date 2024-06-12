@@ -63,18 +63,16 @@ controller.resetPassword = async (req, res) => {
 
 controller.updateImageUser = async (req, res) => {
   try {
-    console.log(req.file);
-    const image = `http://localhost:3001/user/image/${req.file.filename}`;
+    const image = `http://localhost:3000/user/image/${req.file.filename}`;
     const dataExist = await model.getUserById(req.decodeToken.id);
     if (dataExist === false) {
       return response(res, 404, "Data not found");
     }
     const result = await model.updateImageUser(image, req.decodeToken.id);
-    console.log(req.file);
     // cek apakah update mengirim file dan value db user.image tidak null
     if (image && dataExist[0].image) {
       const imageName = dataExist[0].image.replace(
-        "http://localhost:3001/user/image/",
+        "http://localhost:3000/user/image/",
         ""
       );
       const path = `./public/upload/user/${imageName}`;
@@ -156,9 +154,7 @@ controller.updatePass = async (req, res) => {
 };
 controller.updatePin = async (req, res) => {
   try {
-    console.log("yo");
     const pin = req.body.pin ? req.body.pin : null;
-    console.log(pin);
     if (!pin) {
       return response(res, 401, "Please Input Pin");
     }

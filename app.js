@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3001;
+const port = 3000;
 const db = require("./src/config/db");
 const routers = require("./src/routers/index");
 const cors = require("cors");

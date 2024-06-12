@@ -17,7 +17,6 @@ const controller = {
   login: async (req, res) => {
     try {
       const { password, id } = await model.getPassByEmail(req.body.email);
-      console.log(id);
       if (!password) {
         return response(res, 401, "Invalid Email");
       }
