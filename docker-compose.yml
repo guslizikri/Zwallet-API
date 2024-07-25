@@ -2,7 +2,7 @@ services:
   backend:
     container_name: "zwalletbe-zg"
     # image buatan
-    image: zikrigusli/zwalletapi:2
+    image: zikrigusli/zwalletapi:4
     ports:
       - "3001:3000"
     # .env akan ditimpa dengan envirotment dibawah

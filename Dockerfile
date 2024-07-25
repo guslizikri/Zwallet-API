@@ -1,13 +1,16 @@
-FROM cgr.dev/chainguard/node:latest-dev AS build
-RUN mkdir -p /app
-WORKDIR /app
-COPY . /app
-USER root
-RUN rm -rf node_modules && npm install
+FROM node:20.14.0-alpine AS build
 
-FROM cgr.dev/chainguard/node:latest
-COPY --from=build /app /usr/src/app
-WORKDIR /usr/src/app
+# 
+WORKDIR /nodeapp
+
+# Menyalin package.json dan package-lock.json ke dalam container
+COPY package*.json ./
+
+# download depedency
+RUN npm install
+
+# menyalin semua file
+COPY . .
 # sesuakan dengan port yang dipakai
 EXPOSE 3001 
 # sesuaikan dngan nama entry pointnya
