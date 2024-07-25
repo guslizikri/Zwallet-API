@@ -11,8 +11,10 @@ RUN npm install
 
 # menyalin semua file
 COPY . .
+# sesuakan dengan port yang dipakai
+EXPOSE 3001 
+# sesuaikan dngan nama entry pointnya
+CMD ["app.js"]
 
-CMD ["npm", "start"]
-EXPOSE 3000
 # docker build -t zikrigusli/zwalletapi:1 .
-# -t /tag
+# -t adalah tag

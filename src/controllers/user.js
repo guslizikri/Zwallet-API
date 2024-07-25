@@ -63,7 +63,7 @@ controller.resetPassword = async (req, res) => {
 
 controller.updateImageUser = async (req, res) => {
   try {
-    const image = `http://localhost:3000/user/image/${req.file.filename}`;
+    const image = `https://zwallet.guslizikri.online/user/image/${req.file.filename}`;
     const dataExist = await model.getUserById(req.decodeToken.id);
     if (dataExist === false) {
       return response(res, 404, "Data not found");
@@ -72,7 +72,7 @@ controller.updateImageUser = async (req, res) => {
     // cek apakah update mengirim file dan value db user.image tidak null
     if (image && dataExist[0].image) {
       const imageName = dataExist[0].image.replace(
-        "http://localhost:3000/user/image/",
+        "https://zwallet.guslizikri.online/user/image/",
         ""
       );
       const path = `./public/upload/user/${imageName}`;
